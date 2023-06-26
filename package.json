@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/callmeteni/tinyapp/issues"
   },
-  "homepage": "https://github.com/callmeteni/tinyapp#readme"
+  "homepage": "https://github.com/callmeteni/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
