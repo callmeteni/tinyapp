@@ -21,40 +21,52 @@ app.get('/urls.json', (req, res) => {
     res.json(urlDatabase);
 });
 
-app.get("/hello", (req,res) => {
+app.get("/hello", (req, res) => {
     res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
-app.get("/urls", (req,res) =>{
-    const templateVars = {urls: urlDatabase};
+app.get("/urls", (req, res) => {
+    const templateVars = { urls: urlDatabase };
     res.render("urls_index", templateVars);
 });
 
-app.get("/urls/new", (req,res) =>{
+app.get("/urls/new", (req, res) => {
     res.render("urls_new");
 });
 
-app.get("/urls/:id", (req,res) =>{
-    const templateVars = {id: req.params.id, longURL: urlDatabase[req.params.id]};
+app.get("/urls/:id", (req, res) => {
+    const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id] };
     res.render("urls_show", templateVars);
 });
 
-app.use(express.urlencoded({ extended: true }));
-
-app.post("/urls", (req,res) =>{
-    console.log(req.body);
-    res.send("okay");
+app.get("/u/:id/", (req, res) => {
+    const id = req.params.id;
+    const longURL = urlDatabase[id];
+    if (longURL) {
+        res.redirect(longURL);
+    } else {
+        res.statystus(404).send("Not Found");
+    }
 });
 
-function generateRandomString() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let randomString = '';
-    
-    for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      const randomChar = characters.charAt(randomIndex);
-      randomString += randomChar;
+    app.use(express.urlencoded({ extended: true }));
+
+    app.post("/urls", (req, res) => {
+        const shortURL = generateRandomString();
+        const longURL = req.body.longURL;
+        urlDatabase[shortURL] = longURL;
+        res.redirect(`/urls/${shortURL}`);
+    });
+
+    function generateRandomString() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let randomString = '';
+
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            const randomChar = characters.charAt(randomIndex);
+            randomString += randomChar;
+        }
+
+        return randomString;
     }
-    
-    return randomString;
-  }
