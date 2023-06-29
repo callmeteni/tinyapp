@@ -58,6 +58,16 @@ app.get("/u/:id/", (req, res) => {
         res.redirect(`/urls/${shortURL}`);
     });
 
+    app.post("/urls/:id/delete", (req, res) => {
+    const id = req.params.id;;
+    if (urlDatabase[id]){
+        delete urlDatabase[id];
+        res.redirect("/urls");
+    }else {
+        res.status(404).send("Not Found");
+    }
+})
+
     function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let randomString = '';
