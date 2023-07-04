@@ -39,13 +39,20 @@ app.get("/urls/:id", (req, res) => {
     res.render("urls_show", templateVars);
 });
 
+app.post("/urls/:id/update", (req, res) => {
+    const id = req.params.id;
+    const longURL = req.body.longURL;
+    urlDatabase[id] = longURL;
+    res.redirect(`/urls/${id}`);
+});
+
 app.get("/u/:id/", (req, res) => {
     const id = req.params.id;
     const longURL = urlDatabase[id];
     if (longURL) {
         res.redirect(longURL);
     } else {
-        res.statystus(404).send("Not Found");
+        res.status(404).send("Not Found");
     }
 });
 
