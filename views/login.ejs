@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
+  <head>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -14,37 +8,34 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
-    <title>TinyApp</title>
+    <title>URL - TinyApp Example</title>
   </head>
+
   <body>
     <%- include('partials/_header') %>
-    <main style="margin: 1em;">
-      <h3>My URLs</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Short URL ID</th>
-            <th scope="col">Long URL</th>
-            <th scope="row">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let id in urls) { %>
-            <tr>
-              <td><%= id %></td>
-              <td><%= urls[id] %></td>
-              <td>
-                <form method = "GET" action ="urls/<%= id %>">
-                <button class="btn btn-primary">Edit</button>
-                <form method="POST" action="/urls/9sm5xK/delete">
-                <button type="submit" class="btn btn-danger">Delete</button>    
-                </form>  
-            </td>
-            </tr>
+      <div class="card-header"></div>
+      <div class="card-body">
+        <h3>Login</h3>
+        <form method="POST" action="/login">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+          </div>
+          <% if (user) { %>
+            <span class="navbar-item nav-text">You are logged in as <%= user.email %>.</span>
+            <button type="submit" class="btn btn-primary">Logout</button>
+          <% } else { %>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a class="nav-item nav-link" href="/register">Register</a>
           <% } %>
-        </tbody>
-      </table>
-    </main>
+        </form>
+      </div>
+      <div class = "card-footer text-muted"></div>
+     </div>
     <!-- Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
