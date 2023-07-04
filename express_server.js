@@ -65,6 +65,13 @@ app.get("/u/:id/", (req, res) => {
         res.redirect(`/urls/${shortURL}`);
     });
 
+    app.post("/login", (req, res) => {
+        const username = req.body.username;
+        res.cookie("user", username);
+        res.redirect("/urls");
+
+    });
+
     app.post("/urls/:id/delete", (req, res) => {
     const id = req.params.id;;
     if (urlDatabase[id]){
