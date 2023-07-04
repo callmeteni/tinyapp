@@ -30,28 +30,32 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-    const templateVars = { urls: urlDatabase, user: getUserByEmail(req.cookies.user_id) };
+    const templateVars = { urls: urlDatabase, user: users[req.cookies.user_id] };
     res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-    const templateVars = { user: getUserByEmail(req.cookies.user_id) };
+    const templateVars = { user: users[req.cookies.user_id]};
     res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
-    const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id], user: getUserByEmail(req.cookies.user_id) };
-    res.render("urls_show", templateVars);
-});
-
-app.get("/register", (req, res) => {
-    const templateVars = { user: getUserByEmail(req.cookies.user_id) };
+    const templateVars = { user: users[req.cookies.user_id] };
     res.render("register", templateVars);
 });
 
+app.get("/register", (req, res) => {
+    const user = users[req.cookies.user_id];
 
+    if (user) {
+      res.redirect("/urls");
+    } else {
+        templateVars = {user:null};
+      res.render("register", templateVars);
+    }
+  });
 app.get("/login", (req, res) => {
-    const user = getUserByEmail(req.cookies.user_id);
+    const user = users[req.cookies.user_id];
 
     if (user) {
       res.redirect("/urls");
