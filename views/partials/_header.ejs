@@ -16,7 +16,10 @@
           </div>
         </form>
         <% if(username) { %>
-        <span class="nav-item nav-link"> Welcome, <%= username %>!</span>
+        <span class="nav-item nav-link"> Logged in as, <%= username %>!</span>
+        <form method="POST" action="/logout">
+          <button  class="btn btn-link nav-link" type="submit">Log Out</button>
+        </form>
         <% } %>
       </div>
     </div>
