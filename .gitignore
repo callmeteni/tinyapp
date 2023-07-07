@@ -1,12 +1,2 @@
 node_modules
 
-express_server.js
-
-views/partials/_header.ejs
- views/urls_index.ejs
-	views/urls_show.ejs
-    helpers.js
-    test/
-    .gitignore
-	README.me
-    docs/
